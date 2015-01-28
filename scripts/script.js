@@ -1,7 +1,7 @@
 var weatherData;
 var request = new XMLHttpRequest();
 var date = new Date();
-
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 loadData();
 
 function loadData() {
@@ -14,36 +14,52 @@ function loadData() {
 function loadComplete(evt) {
     weatherData = JSON.parse(request.responseText);
     console.log(weatherData);
-    var c = document.getElementById("content");
-    c.innerHTML = "";
+    
+    drawgraph(initcanvas(document.getElementById("content")));
+    
+    var t = document.getElementById("tooltip");
+    t.innerHTML = "";
+    t.appendChild(document.createElement("div"));
+    var c = t.lastElementChild;
+    c.setAttribute("id", "toolall");
+    
     c.appendChild(document.createElement("div"));
     c.lastElementChild.setAttribute("class", "place");
     c.lastElementChild.appendChild(document.createTextNode(weatherData.city.name));
     
     c.appendChild(document.createElement("div"));
     c.lastElementChild.setAttribute("class", "date");
-    c.lastElementChild.appendChild(document.createTextNode(date.getMonth() + " " + date.getDate()));
+    c.lastElementChild.appendChild(document.createTextNode(date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()));
     
     //loop this
-    c.appendChild(document.createElement("div"));
-    c.lastElementChild.setAttribute("class", "currentTemp");
-    c.lastElementChild.appendChild(document.createTextNode(weatherData.list[0].temp.day));
+    for(var i=0; i<5; i++){
+        t.appendChild(document.createElement("div"));
+        c = t.lastElementChild;
+        c.setAttribute("class", "toolday");
+        c.setAttribute("id", "toolday"+i);
+        
+        c.appendChild(document.createElement("div"));
+        c.lastElementChild.setAttribute("class", "currentTemp");
+        c.lastElementChild.innerHTML = weatherData.list[0].temp.day + "&deg; F";
+        
+        c.appendChild(document.createElement("div"));
+        c.lastElementChild.setAttribute("class", "conditions");
+        c.lastElementChild.appendChild(document.createTextNode(weatherData.list[0].weather[0].main));
+        
+        c.appendChild(document.createElement("div"));
+        c.lastElementChild.setAttribute("class", "conditionsDesc");
+        c.lastElementChild.appendChild(document.createTextNode(weatherData.list[0].weather[0].description));
+    }
     
-    c.appendChild(document.createElement("div"));
-    c.lastElementChild.setAttribute("class", "conditions");
-    c.lastElementChild.appendChild(document.createTextNode(weatherData.list[0].weather[0].main));
-    
-    c.appendChild(document.createElement("div"));
-    c.lastElementChild.setAttribute("class", "conditionsDesc");
-    c.lastElementChild.appendChild(document.createTextNode(weatherData.list[0].weather[0].description));
-    
-    
-/*    
-    document.getElementById("place").innerHTML = weatherData.city.name;
-    document.getElementById("day").innerHTML = (date.getMonth()+1) + "/" + date.getDate();
-    document.getElementById("currentTemp").innerHTML = weatherData.list[0].temp.day;
-    document.getElementById("conditions").innerHTML = weatherData.list[0].weather[0].main;
-    document.getElementById("conditionsDesc").innerHTML = weatherData.list[0].weather[0].description;  
-*/
 }
 
+function initcanvas(var go){
+    go.innerHTML = "";
+    go.appendChild(document.createElement("canvas"));
+    var g = go.lastElementChild;
+    g.setAttribute("class", "weathercanvas");
+    return g;
+}
+function drawGraph(var g){
+    
+}
