@@ -15,7 +15,7 @@ function loadComplete(evt) {
     weatherData = JSON.parse(request.responseText);
     console.log(weatherData);
     
-    drawgraph(initcanvas(document.getElementById("content")));
+    drawGraph(initcanvas(document.getElementById("content")));
     
     var t = document.getElementById("tooltip");
     t.innerHTML = "";
@@ -53,13 +53,14 @@ function loadComplete(evt) {
     
 }
 
-function initcanvas(var go){
+function initcanvas(go){
     go.innerHTML = "";
     go.appendChild(document.createElement("canvas"));
     var g = go.lastElementChild;
     g.setAttribute("class", "weathercanvas");
     return g;
 }
-function drawGraph(var g){
+function drawGraph(g){
+    //TODO: draw the graph
     
 }
