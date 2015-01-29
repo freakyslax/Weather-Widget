@@ -138,14 +138,16 @@ function showtooltip(i, x, y){
     t.style.left = x;
     t.style.top = y;
     if(typeof(i) != "number"){
-        t.style.display = "block";
+        jqueryshow(t);
+//        t.style.display = "block";
     }
     else{
         var d = t.getElementsByClassName("toolday");
         for(var j=0; j<d.length; j++){
             if(d[j].getAttribute("id") == "toolday"+i){
-                d[j].style.display = "block";
-                t.style.display = "block";
+//                d[j].style.display = "block";
+//                t.style.display = "block";
+                jqueryshow(t);
             }
             else{
                 d[j].style.display = "none";
@@ -156,5 +158,6 @@ function showtooltip(i, x, y){
 function hidetooltip(){
     var t = document.getElementById("tooltip");
     t.style.display = "none";
+    jqueryhide(t);
 }
 
