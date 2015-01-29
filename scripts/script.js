@@ -43,14 +43,16 @@ function loadComplete(evt) {
         c = t.lastElementChild;
         c.setAttribute("class", "toolday");
         c.setAttribute("id", "toolday"+i);
-        c.style.backgroundImage = "url(" + ICONLOCATION + weatherData.list[i].weather[0].icon + ICONFORMAT + ")";
-        c.style.backgroundSize = "inherit";
         
         c.appendChild(document.createElement("div"));
         c.lastElementChild.setAttribute("class", "date");
         c.lastElementChild.appendChild(document.createTextNode(tmpdate.getDate() + " " + months[tmpdate.getMonth()] + " " + tmpdate.getFullYear()));
         tmpdate.setDate(tmpdate.getDate() + 1);
     
+        c.appendChild(document.createElement("img"));
+        c.lastElementChild.src = ICONLOCATION + weatherData.list[i].weather[0].icon + ICONFORMAT;
+        c.lastElementChild.setAttribute("class", "tooldayicon");
+        
         for(var k in weatherData.list[i].temp){
             c.appendChild(document.createElement("div"));
             c.lastElementChild.setAttribute("class", "currentTemp");
