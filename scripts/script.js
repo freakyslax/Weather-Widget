@@ -5,11 +5,13 @@ var GRAPHLINECOLOR = "#ff0000";
 
 var weatherData;
 var weatherGraph = [];
+var graphPoints = [];
 var weatherMax = 0;
 var weatherMin = 0;
 var request = new XMLHttpRequest();
 var date = new Date();
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var graphCanvas;
 loadData();
 
 function loadData() {
@@ -24,6 +26,7 @@ function loadComplete(evt) {
     console.log(weatherData);
     
     var t = document.getElementById("tooltip");
+    t.style.display = "none";
     t.innerHTML = "";
     t.appendChild(document.createElement("div"));
     var c = t.lastElementChild;
@@ -33,18 +36,19 @@ function loadComplete(evt) {
     c.lastElementChild.setAttribute("class", "place");
     c.lastElementChild.appendChild(document.createTextNode(weatherData.city.name));
     
-    c.appendChild(document.createElement("div"));
-    c.lastElementChild.setAttribute("class", "date");
-    c.lastElementChild.appendChild(document.createTextNode(date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()));
-    
-    //loop this
-    for(var i=0; i<5; i++){
+    var tmpdate = new Date(date);
+    for(var i=0; i<weatherData.list.length; i++){
         t.appendChild(document.createElement("div"));
         c = t.lastElementChild;
         c.setAttribute("class", "toolday");
         c.setAttribute("id", "toolday"+i);
         c.style.backgroundImage = "url(" + ICONLOCATION + weatherData.list[i].weather[0].icon + ICONFORMAT + ")";
         
+        c.appendChild(document.createElement("div"));
+        c.lastElementChild.setAttribute("class", "date");
+        c.lastElementChild.appendChild(document.createTextNode(tmpdate.getDate() + " " + months[tmpdate.getMonth()] + " " + tmpdate.getFullYear()));
+        tmpdate.setDate(tmpdate.getDate() + 1);
+    
         for(var k in weatherData.list[i].temp){
             c.appendChild(document.createElement("div"));
             c.lastElementChild.setAttribute("class", "currentTemp");
@@ -60,38 +64,90 @@ function loadComplete(evt) {
         c.lastElementChild.setAttribute("class", "conditionsDesc");
         c.lastElementChild.appendChild(document.createTextNode(weatherData.list[i].weather[0].description));
     }
-    
-    drawGraph(initcanvas(document.getElementById("content")));
+    initcanvas(document.getElementById("content"));
+    drawGraph();
 }
 
 function initcanvas(go){
     go.innerHTML = "";
     go.appendChild(document.createElement("canvas"));
-    var g = go.lastElementChild;
-    g.setAttribute("class", "weathercanvas");
+    graphCanvas = go.lastElementChild;
+    graphCanvas.setAttribute("class", "weathercanvas");
+    graphCanvas.onmousemove = mouseovergraph;
     for(var i=0; i<weatherData.list.length; i++){
         weatherGraph[i] = weatherData.list[i].temp.day;
         weatherMax = Math.max(weatherMax, weatherGraph[i]);
         weatherMin = (i==0)?weatherGraph[i] : Math.min(weatherMin, weatherGraph[i]);
     }
-    return g;
+    initgraphpoints();
 }
-function drawGraph(g){
-    var c = g.getContext("2d");
+function initgraphpoints(){
+    graphPoints = [];
+    for(var i=0; i<weatherGraph.length; i++){
+        graphPoints[i] = {x:graphCanvas.width/(weatherGraph.length-1)*i, y:(weatherMax-weatherGraph[i])*(graphCanvas.height/(weatherMax-weatherMin))};
+    }
+}
+function drawGraph(){
+    var c = graphCanvas.getContext("2d");
     c.fillStyle = GRAPHBACKCOLOR;
-    c.fillRect(0,0, g.width, g.height);
+    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     
     c.strokeStyle = GRAPHLINECOLOR;
-    c.moveTo(0, g.height / 2);
     for(var i=0; i<weatherGraph.length; i++){
-        var x = g.width/(weatherGraph.length-1) * i;
-        var y = (weatherMax-weatherGraph[i]) * (g.height/(weatherMax-weatherMin));
         if(i == 0){
-            c.moveTo(x,y);
+            c.moveTo(graphPoints[i].x, graphPoints[i].y);
         }
         else{
-            c.lineTo(x, y);
+            c.lineTo(graphPoints[i].x, graphPoints[i].y);
         }
         c.stroke();
     }
 }
+function mouseovergraph(e){
+    var x = e.clientX - graphCanvas.getBoundingClientRect().left;
+    var y = e.clientY - graphCanvas.getBoundingClientRect().top;
+    var r = 10;
+    var drawr = r/2;
+    var shown = false;
+    
+    for(var i=0; i<graphPoints.length; i++){
+        if(Math.abs(x-graphPoints[i].x) < r && Math.abs(y-graphPoints[i].y) < r){
+            var c = graphCanvas.getContext("2d");
+            c.beginPath();
+            c.arc(x, y, drawr, 0, 2*Math.PI);
+            c.fillStyle = GRAPHLINECOLOR;
+            c.fill();
+            showtooltip(i, x+"px", y+"px");
+            shown = true;
+        }
+    }
+    if(!shown){
+        hidetooltip();
+    }
+}
+
+function showtooltip(i, x, y){
+    var t = document.getElementById("tooltip");
+    t.style.left = x;
+    t.style.top = y;
+    if(typeof(i) != "number"){
+        t.style.display = "block";
+    }
+    else{
+        var d = t.getElementsByClassName("toolday");
+        for(var j=0; j<d.length; j++){
+            if(d[j].getAttribute("id") == "toolday"+i){
+                d[j].style.display = "block";
+                t.style.display = "block";
+            }
+            else{
+                d[j].style.display = "none";
+            }
+        }
+    }
+}
+function hidetooltip(){
+    var t = document.getElementById("tooltip");
+    t.style.display = "none";
+}
+
