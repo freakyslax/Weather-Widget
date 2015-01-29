@@ -1,7 +1,10 @@
 
 #content {}
 
-.weathercanvas {}
+.weathercanvas {
+    background-image: url(images/canvasbackground.jpg);
+    background-size: cover;
+}
 
 
 #tooltip {}
@@ -15,6 +18,12 @@
 .conditionsDesc {}
 
 
+body {
+    background-image: url(images/canvasbackground.jpg);
+    background-size: cover;
+    background-color: #aaaaff;
+    background-blend-mode: lighten;
+}
 
 header {
 	
