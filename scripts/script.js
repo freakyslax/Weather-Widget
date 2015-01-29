@@ -1,5 +1,5 @@
 var ICONFORMAT = ".png";
-var ICONLOCATION = "images/";
+var ICONLOCATION = "http://openweathermap.org/img/w/";
 var GRAPHBACKCOLOR = "#ffff00";
 var GRAPHLINECOLOR = "#ff0000";
 
