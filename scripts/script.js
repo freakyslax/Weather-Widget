@@ -1,6 +1,5 @@
 var ICONFORMAT = ".png";
 var ICONLOCATION = "http://openweathermap.org/img/w/";
-//var GRAPHBACKCOLOR = "#ffff00";
 var GRAPHLINECOLOR = "#ff0000";
 
 var weatherData;
@@ -28,6 +27,7 @@ function loadComplete(evt) {
     var t = document.getElementById("tooltip");
     t.style.display = "none";
     t.style.position = "absolute";
+    t.onmouseover = mouseovergraph;
     t.innerHTML = "";
     t.appendChild(document.createElement("div"));
     var c = t.lastElementChild;
@@ -90,17 +90,7 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
-//    c.fillStyle = GRAPHBACKCOLOR;
-    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     c.clearRect(0,0, graphCanvas.width,graphCanvas.height);
-//    var GRAPHBACKIMAGE = new Image();
-//    GRAPHBACKIMAGE.src = "canvasbackground.jpg";
-    
-//    GRAPHBACKIMAGE.onload = function() {
-//        c.drawImage(GRAPHBACKIMAGE,0,0);
-//    }
-//    c.fillStyle = GRAPHBACKCOLOR;
-//    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     c.strokeStyle = GRAPHLINECOLOR;
     for(var i=0; i<weatherGraph.length; i++){
         if(i == 0){
@@ -126,7 +116,7 @@ function mouseovergraph(e){
             c.arc(x, y, drawr, 0, 2*Math.PI);
             c.fillStyle = GRAPHLINECOLOR;
             c.fill();
-            showtooltip(i, x+"px", y+"px");
+            showtooltip(i, e.clientX+"px", e.clientY+"px");
             shown = true;
         }
     }
@@ -141,14 +131,12 @@ function showtooltip(i, x, y){
     t.style.top = y;
     if(typeof(i) != "number"){
         jqueryshow(t);
-//        t.style.display = "block";
     }
     else{
         var d = t.getElementsByClassName("toolday");
         for(var j=0; j<d.length; j++){
             if(d[j].getAttribute("id") == "toolday"+i){
-//                d[j].style.display = "block";
-//                t.style.display = "block";
+                d[j].style.display = "block";
                 jqueryshow(t);
             }
             else{
