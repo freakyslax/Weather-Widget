@@ -1,6 +1,6 @@
 var ICONFORMAT = ".png";
 var ICONLOCATION = "http://openweathermap.org/img/w/";
-var GRAPHBACKCOLOR = "#ffff00";
+//var GRAPHBACKCOLOR = "#ffff00";
 var GRAPHLINECOLOR = "#ff0000";
 
 var weatherData;
@@ -90,14 +90,16 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
-    var GRAPHBACKIMAGE = new Image();
-    GRAPHBACKIMAGE.src = "canvasbackground.jpg";
     
-    GRAPHBACKIMAGE.onload = function() {
-        c.drawImage(GRAPHBACKIMAGE,0,0);
-    }
-    c.fillStyle = GRAPHBACKCOLOR;
-    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
+    c.clearRect(0,0, graphCanvas.width,graphCanvas.height);
+//    var GRAPHBACKIMAGE = new Image();
+//    GRAPHBACKIMAGE.src = "canvasbackground.jpg";
+    
+//    GRAPHBACKIMAGE.onload = function() {
+//        c.drawImage(GRAPHBACKIMAGE,0,0);
+//    }
+//    c.fillStyle = GRAPHBACKCOLOR;
+//    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     
     c.strokeStyle = GRAPHLINECOLOR;
     for(var i=0; i<weatherGraph.length; i++){
