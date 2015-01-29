@@ -27,6 +27,7 @@ function loadComplete(evt) {
     
     var t = document.getElementById("tooltip");
     t.style.display = "none";
+    t.style.position = "absolute";
     t.innerHTML = "";
     t.appendChild(document.createElement("div"));
     var c = t.lastElementChild;
