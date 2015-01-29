@@ -7,15 +7,29 @@
 }
 
 
-#tooltip {}
-#toolall {}
-#toolday {}
+#tooltip {
+    background-color: rgba(200,200,255,0.5);
+    border-width: 1px;
+    border-style: ridge;
+    border-color: #000000;
+    background-size: cover;
+}
+#toolall {
+    font-weight: bold;
+}
+#toolday {
+    text-shadow: 2px 2px #ffffff;
+}
 
 .place {}
-.date {}
+.date {
+    font-weight: bold;
+}
 .currentTemp {}
 .conditions {}
-.conditionsDesc {}
+.conditionsDesc {
+    font-weight: bold;
+}
 
 
 body {

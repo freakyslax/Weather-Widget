@@ -44,6 +44,7 @@ function loadComplete(evt) {
         c.setAttribute("class", "toolday");
         c.setAttribute("id", "toolday"+i);
         c.style.backgroundImage = "url(" + ICONLOCATION + weatherData.list[i].weather[0].icon + ICONFORMAT + ")";
+        c.style.backgroundSize = "inherit";
         
         c.appendChild(document.createElement("div"));
         c.lastElementChild.setAttribute("class", "date");
