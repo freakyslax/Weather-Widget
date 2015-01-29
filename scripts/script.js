@@ -90,7 +90,7 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
-    c.fillStyle = GRAPHBACKCOLOR;
+//    c.fillStyle = GRAPHBACKCOLOR;
     c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     c.clearRect(0,0, graphCanvas.width,graphCanvas.height);
 //    var GRAPHBACKIMAGE = new Image();
