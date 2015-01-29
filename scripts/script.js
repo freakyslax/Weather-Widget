@@ -147,7 +147,6 @@ function showtooltip(i, x, y){
 }
 function hidetooltip(){
     var t = document.getElementById("tooltip");
-    t.style.display = "none";
     jqueryhide(t);
 }
 
