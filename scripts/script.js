@@ -90,11 +90,8 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
-<<<<<<< HEAD
     c.fillStyle = GRAPHBACKCOLOR;
     c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
-=======
-    
     c.clearRect(0,0, graphCanvas.width,graphCanvas.height);
 //    var GRAPHBACKIMAGE = new Image();
 //    GRAPHBACKIMAGE.src = "canvasbackground.jpg";
@@ -104,8 +101,6 @@ function drawGraph(){
 //    }
 //    c.fillStyle = GRAPHBACKCOLOR;
 //    c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
->>>>>>> acbf4163e52467b3626f334e086a886f5739b565
-    
     c.strokeStyle = GRAPHLINECOLOR;
     for(var i=0; i<weatherGraph.length; i++){
         if(i == 0){
