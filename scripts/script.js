@@ -90,6 +90,12 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
+    var GRAPHBACKIMAGE = new Image();
+    GRAPHBACKIMAGE.src = "canvasbackground.jpg";
+    
+    GRAPHBACKIMAGE.onload = function() {
+        c.drawImage(GRAPHBACKIMAGE,0,0);
+    }
     c.fillStyle = GRAPHBACKCOLOR;
     c.fillRect(0,0, graphCanvas.width, graphCanvas.height);
     
