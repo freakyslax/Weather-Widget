@@ -1,7 +1,7 @@
 
 #content {}
 
-.weathercanvas {
+#weathercanvas {
     background-image: url(images/canvasbackground.jpg);
     background-size: cover;
 }

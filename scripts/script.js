@@ -11,11 +11,10 @@ var request = new XMLHttpRequest();
 var date = new Date();
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var graphCanvas;
-loadData();
+loadData('http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City&units=imperial');
 
-function loadData() {
-    
-    request.open('GET', 'http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City&units=imperial');
+function loadData(src) {
+    request.open('GET', src);
     request.onload = loadComplete;
     request.send();
 }
@@ -69,21 +68,20 @@ function loadComplete(evt) {
         c.lastElementChild.appendChild(document.createTextNode(weatherData.list[i].weather[0].description));
     }
     initcanvas(document.getElementById("content"));
-    drawGraph();
+    resizegraph();
 }
 
 function initcanvas(go){
     go.innerHTML = "";
     go.appendChild(document.createElement("canvas"));
     graphCanvas = go.lastElementChild;
-    graphCanvas.setAttribute("class", "weathercanvas");
+    graphCanvas.setAttribute("id", "weathercanvas");
     graphCanvas.onmousemove = mouseovergraph;
     for(var i=0; i<weatherData.list.length; i++){
         weatherGraph[i] = weatherData.list[i].temp.day;
         weatherMax = Math.max(weatherMax, weatherGraph[i]);
         weatherMin = (i==0)?weatherGraph[i] : Math.min(weatherMin, weatherGraph[i]);
     }
-    initgraphpoints();
 }
 function initgraphpoints(){
     graphPoints = [];
@@ -93,7 +91,7 @@ function initgraphpoints(){
 }
 function drawGraph(){
     var c = graphCanvas.getContext("2d");
-    c.clearRect(0,0, graphCanvas.width,graphCanvas.height);
+    c.clearRect(0,0, graphCanvas.width, graphCanvas.height);
     c.strokeStyle = GRAPHLINECOLOR;
     for(var i=0; i<weatherGraph.length; i++){
         if(i == 0){
@@ -153,3 +151,7 @@ function hidetooltip(){
     jqueryhide(t);
 }
 
+function resizegraph(){
+    initgraphpoints();
+    drawGraph();
+}
