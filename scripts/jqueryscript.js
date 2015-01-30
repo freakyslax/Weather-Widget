@@ -8,7 +8,7 @@ var footersizechg = function(){
 
 $(document).ready(function(){
     $("footer").css("position", "fixed");
-    $("footer").css("bottom", "0px");
+    $("footer").css("bottom", $("footer").css("padding-bottom"));
     document.getElementsByTagName("body")[0].appendChild(document.createElement("div"));
     var el = document.getElementsByTagName("body")[0].lastElementChild;
     el.setAttribute("id", "footerspaceholder");
