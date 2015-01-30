@@ -163,4 +163,5 @@ function resizegraph(w, h){
     }
     initgraphpoints();
     drawGraph();
+    footersizechg();
 }

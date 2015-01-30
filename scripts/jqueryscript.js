@@ -1,3 +1,11 @@
+var footersizechg = function(){
+    $el = $("#footerspaceholder");
+    $("footer").css("width", ($("body").width() - parseInt($("footer").css("padding-left")) - parseInt($("footer").css("padding-right")))+"px");
+    $el.css("height", $("footer").height());
+    $el.css("width", $("footer").width());
+};
+
+
 $(document).ready(function(){
     $("footer").css("position", "fixed");
     $("footer").css("bottom", "0px");
@@ -6,14 +14,8 @@ $(document).ready(function(){
     el.setAttribute("id", "footerspaceholder");
     el.setAttribute("class", "footer");
     $(el).css("visibility", "hidden");
-    var footersizechg = function(){
-        $el = $("#footerspaceholder");
-        $("footer").css("width", ($("body").width() - parseInt($("footer").css("padding")))+"px");
-        $el.css("height", $("footer").height());
-        $el.css("width", $("footer").width());
-    };
-    footersizechg();
     $(window).on("resize", footersizechg);
+    footersizechg();
     
 });
 
