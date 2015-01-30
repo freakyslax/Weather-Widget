@@ -57,10 +57,20 @@ nav{
 	padding: 5px;
 }
 
-section{
-	width: 350px;
-	float: left;
+.graph{
+	
+	width: 400px;
+	float: right;
 	padding: 10px;
+}
+.description{
+	padding:  10px;
+	text-align: center;
+	
+}
+section .arrow{
+	height: 15px;
+	width: 25px;
 }
 
 .footer{
