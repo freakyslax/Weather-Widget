@@ -1,6 +1,7 @@
 var ICONFORMAT = ".png";
 var ICONLOCATION = "http://openweathermap.org/img/w/";
 var GRAPHLINECOLOR = "#ff0000";
+var GRAPHSPACER = 5;
 
 var weatherData;
 var weatherGraph = [];
@@ -86,7 +87,7 @@ function initcanvas(go){
 function initgraphpoints(){
     graphPoints = [];
     for(var i=0; i<weatherGraph.length; i++){
-        graphPoints[i] = {x:graphCanvas.width/(weatherGraph.length-1)*i, y:(weatherMax-weatherGraph[i])*(graphCanvas.height/(weatherMax-weatherMin))};
+        graphPoints[i] = {x:(graphCanvas.width-GRAPHSPACER*2)/(weatherGraph.length-1)*i + GRAPHSPACER, y:(weatherMax-weatherGraph[i])*((graphCanvas.height-GRAPHSPACER*2)/(weatherMax-weatherMin)) + GRAPHSPACER};
     }
 }
 function drawGraph(){
