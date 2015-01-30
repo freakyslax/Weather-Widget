@@ -3,6 +3,7 @@ var ICONLOCATION = "http://openweathermap.org/img/w/";
 var GRAPHLINECOLOR = "#ff0000";
 var GRAPHLINESIZE = 2;
 var GRAPHSPACER = 5;
+var GRAPHCIRCLER = 5;
 
 var weatherData;
 var weatherGraph = [];
@@ -110,6 +111,12 @@ function drawGraph(){
             c.lineTo(graphPoints[i].x, graphPoints[i].y);
         }
         c.stroke();
+    }
+    for(var i=0; i<weatherGraph.length; i++){
+        c.beginPath();
+        c.arc(graphPoints[i].x, graphPoints[i].y, GRAPHCIRCLER, 0, 2*Math.PI);
+        c.fillStyle = GRAPHLINECOLOR;
+        c.fill();
     }
 }
 function mouseovergraph(e){
