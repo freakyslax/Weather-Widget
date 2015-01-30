@@ -17,6 +17,7 @@ $(document).ready(function(){
     $(window).on("resize", footersizechg);
     footersizechg();
     
+    
 });
 
 function jqueryshow(e){
@@ -25,3 +26,18 @@ function jqueryshow(e){
 function jqueryhide(e){
     $(e).fadeOut();
 }
+
+function jquerycityinit(){
+    $(".cityselection").hover(
+        function(evt){
+            $(this).addClass("selectedcity");
+        },
+        function(evt){
+            $(this).removeClass("selectedcity");
+        }
+    );
+    $(".cityselection").on("mousedown", function(evt){$(this).addClass("pressedcity");});
+    $(".cityselection").on("mouseup", function(evt){$(this).removeClass("pressedcity");});
+    
+}
+

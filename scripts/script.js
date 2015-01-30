@@ -1,6 +1,7 @@
 var ICONFORMAT = ".png";
 var ICONLOCATION = "http://openweathermap.org/img/w/";
 var GRAPHLINECOLOR = "#ff0000";
+var GRAPHLINESIZE = 2;
 var GRAPHSPACER = 5;
 
 var weatherData;
@@ -9,15 +10,15 @@ var graphPoints = [];
 var weatherMax = 0;
 var weatherMin = 0;
 var request = new XMLHttpRequest();
+var searchr = new XMLHttpRequest();
 var date = new Date();
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var graphCanvas;
-loadData('http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City&units=imperial');
 
-function loadData(src) {
-    request.open('GET', src);
-    request.onload = loadComplete;
-    request.send();
+function loadData(req, src, func) {
+    req.open('GET', src);
+    req.onload = func;
+    req.send();
 }
 
 function loadComplete(evt) {
@@ -35,7 +36,11 @@ function loadComplete(evt) {
     
     c.appendChild(document.createElement("div"));
     c.lastElementChild.setAttribute("class", "place");
-    c.lastElementChild.appendChild(document.createTextNode(weatherData.city.name));
+    c.lastElementChild.appendChild(document.createTextNode(weatherData.city.name + ", " + weatherData.city.country));
+    
+    c.appendChild(document.createElement("div"));
+    c.lastElementChild.setAttribute("class", "coordplace");
+    c.lastElementChild.appendChild(document.createTextNode("LAT=" + weatherData.city.coord.lat + ", LON=" + weatherData.city.coord.lon));
     
     var tmpdate = new Date(date);
     for(var i=0; i<weatherData.list.length; i++){
@@ -96,6 +101,7 @@ function drawGraph(){
     var c = graphCanvas.getContext("2d");
     c.clearRect(0,0, graphCanvas.width, graphCanvas.height);
     c.strokeStyle = GRAPHLINECOLOR;
+    c.lineWidth = GRAPHLINESIZE;
     for(var i=0; i<weatherGraph.length; i++){
         if(i == 0){
             c.moveTo(graphPoints[i].x, graphPoints[i].y);
@@ -165,3 +171,31 @@ function resizegraph(w, h){
     drawGraph();
     footersizechg();
 }
+
+
+var citynames = [];
+var citylocat = [];
+loadData(request, 'http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City&units=imperial', loadComplete);
+function lookforcities(){
+    var search = document.getElementById('forminputcity').value;
+    if(search.length > 2){
+        loadData(searchr, 'http://api.openweathermap.org/data/2.5/find?q='+search+'&type=like&units=imperial', function(evt){
+            citynames = [];
+            var tmp = JSON.parse(searchr.responseText);
+            var c = document.getElementById("cityselector");
+            for(var i=0; i<tmp.list.length; i++){
+                citynames[i] = tmp.list[i].name + "," + tmp.list[i].sys.country;
+                citylocat[i] = 'lat=' + tmp.list[i].coord.lat + '&lon=' + tmp.list[i].coord.lon;
+                c.appendChild(document.createElement("p"));
+                var p = c.lastElementChild;
+                p.setAttribute("class", "cityselection");
+                p.appendChild(document.createTextNode(citynames[i] + " " + citylocat[i]));
+                p.setAttribute('citylocat', citylocat[i]);
+                p.onclick = function(){loadData(request, 'http://api.openweathermap.org/data/2.5/forecast/daily?'+this.getAttribute('citylocat')+'&units=imperial', loadComplete);};
+            }
+            jquerycityinit();
+        });
+    }
+};
+document.getElementById('forminputcity').parentElement.setAttribute("action", "javascript:lookforcities();");
+

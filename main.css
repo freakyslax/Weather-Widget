@@ -22,6 +22,7 @@
 }
 
 .place {}
+.coordplace {}
 .date {
     font-weight: bold;
 }
@@ -32,6 +33,27 @@
     font-weight: bold;
 }
 
+#forminputcity {}
+#cityselector {
+    display: inline-block;
+    background-color: rgba(200,200,255,0.5);
+}
+.cityselection {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-style: groove;
+    border-width: 3px;
+    border-color: #000000;
+    border-radius: 3px;
+}
+.selectedcity {
+    background-color: rgba(255,75,75,0.8);
+}
+.pressedcity {
+    background-color: rgba(200,25,25,0.8);
+}
 
 body {
     background-image: url(images/canvasbackground.jpg);

@@ -20,16 +20,24 @@
 		Kahea Martin<br>
 		Trevan Redmon<br>	
 		</nav>
+    
+		<section class="graph">
+            <div id="content"></div>
+            <div id="tooltip"></div>
+		</section>
+    
 		<section class="description">
-		<p>The graph to the right displays the current forecast of the next 7 days</p>
+		    <p>The graph to the right displays the current forecast of the next 7 days.<br/>
+                I dare you to move your mouse over the line.</p>
 			<img src="http://empresariocelebridad.com/wp-content/uploads/2013/08/curve_Red-Arrow_right1.gif" class ="arrow"/>
+            <form>
+                <input type="text" id="forminputcity" />
+                <input type="submit" value="Look for City" />
+            </form>
+            <div id="cityselector"></div>
 		</section>
 	
-		<section class="graph">
-        <div id="content"></div>
-        <div id="tooltip"></div>
-        <script src="scripts/script.js"></script>
-		</section>
 		<footer class="footer">Copyright &copy;2015 Team 4 WWW </footer>
+        <script src="scripts/script.js"></script>
 </body>
 </html>
