@@ -78,6 +78,9 @@ nav{
 	float: left;
 	padding: 5px;
 }
+nav li {
+    list-style: none;
+}
 
 .graph{
 	
