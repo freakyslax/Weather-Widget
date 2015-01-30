@@ -78,16 +78,18 @@ function initcanvas(go){
     graphCanvas = go.lastElementChild;
     graphCanvas.setAttribute("id", "weathercanvas");
     graphCanvas.onmousemove = mouseovergraph;
+}
+function initgraphpoints(){
+    weatherGraph = [];
     for(var i=0; i<weatherData.list.length; i++){
         weatherGraph[i] = weatherData.list[i].temp.day;
         weatherMax = Math.max(weatherMax, weatherGraph[i]);
         weatherMin = (i==0)?weatherGraph[i] : Math.min(weatherMin, weatherGraph[i]);
     }
-}
-function initgraphpoints(){
     graphPoints = [];
     for(var i=0; i<weatherGraph.length; i++){
-        graphPoints[i] = {x:(graphCanvas.width-GRAPHSPACER*2)/(weatherGraph.length-1)*i + GRAPHSPACER, y:(weatherMax-weatherGraph[i])*((graphCanvas.height-GRAPHSPACER*2)/(weatherMax-weatherMin)) + GRAPHSPACER};
+        graphPoints[i] = {x:(graphCanvas.width-GRAPHSPACER*2)/(weatherGraph.length-1)*i + GRAPHSPACER,
+                          y:(weatherMax-weatherGraph[i])*((graphCanvas.height-GRAPHSPACER*2)/(weatherMax-weatherMin)) + GRAPHSPACER};
     }
 }
 function drawGraph(){
@@ -152,7 +154,13 @@ function hidetooltip(){
     jqueryhide(t);
 }
 
-function resizegraph(){
+function resizegraph(w, h){
+    if(typeof(w)=="number"){
+        graphCanvas.width = w;
+    }
+    if(typeof(h)=="number"){
+        graphCanvas.height = h;
+    }
     initgraphpoints();
     drawGraph();
 }
