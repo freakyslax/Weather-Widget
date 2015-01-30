@@ -183,6 +183,7 @@ function lookforcities(){
             citynames = [];
             var tmp = JSON.parse(searchr.responseText);
             var c = document.getElementById("cityselector");
+            c.innerHTML = "";
             for(var i=0; i<tmp.list.length; i++){
                 citynames[i] = tmp.list[i].name + "," + tmp.list[i].sys.country;
                 citylocat[i] = 'lat=' + tmp.list[i].coord.lat + '&lon=' + tmp.list[i].coord.lon;

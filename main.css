@@ -36,9 +36,9 @@
 #forminputcity {}
 #cityselector {
     display: inline-block;
-    background-color: rgba(200,200,255,0.5);
 }
 .cityselection {
+    background-color: rgba(200,200,255,0.5);
     padding-top: 0px;
     padding-bottom: 0px;
     margin-top: 15px;
@@ -49,10 +49,10 @@
     border-radius: 3px;
 }
 .selectedcity {
-    background-color: rgba(255,75,75,0.8);
+    background-color: rgba(230,25,25,0.8);
 }
 .pressedcity {
-    background-color: rgba(200,25,25,0.8);
+    background-color: rgba(200,0,0,0.8);
 }
 
 body {

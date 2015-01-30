@@ -28,6 +28,7 @@ function jqueryhide(e){
 }
 
 function jquerycityinit(){
+    $(".cityselection").css("cursor", "default");
     $(".cityselection").hover(
         function(evt){
             $(this).addClass("selectedcity");
